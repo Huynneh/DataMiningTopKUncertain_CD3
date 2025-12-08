@@ -1,0 +1,60 @@
+======PRINT TOP-K FREQUENT ITEMSETS FROM UNCERTAIN DATABASES=====
+
+Itemset [10032] | ExpSup=25944.7800
+Itemset [10040] | ExpSup=21517.1700
+Itemset [10031] | ExpSup=8022.7700
+Itemset [10026] | ExpSup=7764.8000
+Itemset [10034] | ExpSup=7659.9300
+Itemset [10032, 10040] | ExpSup=7625.7741
+Itemset [10032, 10034] | ExpSup=2998.8719
+Itemset [10031, 10032] | ExpSup=2731.4097
+Itemset [10034, 10040] | ExpSup=2379.4015
+Itemset [10056] | ExpSup=2242.3800
+Itemset [10026, 10032] | ExpSup=2213.9146
+Itemset [10026, 10040] | ExpSup=2119.7415
+Itemset [10031, 10040] | ExpSup=2096.8882
+Itemset [10078] | ExpSup=1976.4900
+Itemset [1020] | ExpSup=1669.0000
+Itemset [10150] | ExpSup=1600.5500
+Itemset [10210] | ExpSup=1531.3800
+Itemset [1003] | ExpSup=1530.5100
+Itemset [10097] | ExpSup=1428.6900
+Itemset [10277] | ExpSup=1329.6300
+Itemset [10089] | ExpSup=1121.8100
+Itemset [10425] | ExpSup=1103.4500
+Itemset [10241] | ExpSup=1074.3500
+Itemset [10031, 10034] | ExpSup=1010.7677
+Itemset [10032, 10034, 10040] | ExpSup=994.7069
+Itemset [1037] | ExpSup=943.7400
+Itemset [10392] | ExpSup=937.0200
+Itemset [1013] | ExpSup=907.5200
+Itemset [11192] | ExpSup=906.6300
+Itemset [10240] | ExpSup=889.4400
+Itemset [12011] | ExpSup=879.0000
+Itemset [10026, 10034] | ExpSup=830.1645
+Itemset [10031, 10032, 10040] | ExpSup=827.6705
+Itemset [10069] | ExpSup=815.6500
+Itemset [10031, 10150] | ExpSup=804.9360
+Itemset [10478] | ExpSup=775.2000
+Itemset [10026, 10031] | ExpSup=756.4655
+Itemset [10227] | ExpSup=753.3200
+Itemset [10051] | ExpSup=753.1700
+Itemset [6808] | ExpSup=738.0000
+Itemset [10026, 10032, 10040] | ExpSup=737.8546
+Itemset [1003, 10031] | ExpSup=735.6677
+Itemset [10040, 10078] | ExpSup=727.5778
+Itemset [11029] | ExpSup=725.0300
+Itemset [10031, 10097] | ExpSup=722.6897
+Itemset [10032, 10078] | ExpSup=720.7051
+Itemset [10164] | ExpSup=706.4900
+Itemset [10032, 10056] | ExpSup=705.7917
+Itemset [10005] | ExpSup=702.8700
+Itemset [9585] | ExpSup=684.5900
+
+============= TOP-K FREQUENT FROM UNCERTAIN DATABASES=============
+ Top K = 50
+ Items count from dataset: 16470
+ Transactions count from dataset : 88162
+ Maximum memory usage : 46.5928955078125 mb
+ Total time ~ 812111 ms
+===================================================

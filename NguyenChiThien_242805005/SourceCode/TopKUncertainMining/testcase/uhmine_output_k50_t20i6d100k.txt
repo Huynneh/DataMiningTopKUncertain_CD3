@@ -1,0 +1,60 @@
+======PRINT TOP-K FREQUENT ITEMSETS FROM UNCERTAIN DATABASES=====
+
+Itemset [384] | ExpSup=7077.4300
+Itemset [200] | ExpSup=6982.6600
+Itemset [684] | ExpSup=6204.7400
+Itemset [204] | ExpSup=5874.6400
+Itemset [819] | ExpSup=5216.5100
+Itemset [253] | ExpSup=5094.2800
+Itemset [243] | ExpSup=5085.8100
+Itemset [138] | ExpSup=5013.2400
+Itemset [918] | ExpSup=4910.4600
+Itemset [810] | ExpSup=4652.8700
+Itemset [83] | ExpSup=4636.0400
+Itemset [714] | ExpSup=4615.2800
+Itemset [22] | ExpSup=4614.2800
+Itemset [2] | ExpSup=4527.0400
+Itemset [113] | ExpSup=4526.1800
+Itemset [277] | ExpSup=4321.1700
+Itemset [202] | ExpSup=4256.2900
+Itemset [155] | ExpSup=4243.0700
+Itemset [333] | ExpSup=4195.2400
+Itemset [168] | ExpSup=4163.4200
+Itemset [466] | ExpSup=4137.4000
+Itemset [198] | ExpSup=4111.2300
+Itemset [116] | ExpSup=4036.0400
+Itemset [351] | ExpSup=4019.0000
+Itemset [299] | ExpSup=3999.7900
+Itemset [331] | ExpSup=3943.4100
+Itemset [247] | ExpSup=3937.6300
+Itemset [606] | ExpSup=3699.6400
+Itemset [983] | ExpSup=3668.3300
+Itemset [347] | ExpSup=3650.4500
+Itemset [86] | ExpSup=3620.2500
+Itemset [759] | ExpSup=3599.6100
+Itemset [427] | ExpSup=3575.4600
+Itemset [256] | ExpSup=3571.8800
+Itemset [152] | ExpSup=3497.8400
+Itemset [411] | ExpSup=3451.3700
+Itemset [914] | ExpSup=3415.3200
+Itemset [459] | ExpSup=3385.9700
+Itemset [148] | ExpSup=3316.2200
+Itemset [362] | ExpSup=3307.7700
+Itemset [619] | ExpSup=3306.8000
+Itemset [105] | ExpSup=3288.2200
+Itemset [163] | ExpSup=3279.4900
+Itemset [111] | ExpSup=3266.0300
+Itemset [710] | ExpSup=3257.3900
+Itemset [429] | ExpSup=3237.5000
+Itemset [264] | ExpSup=3211.9600
+Itemset [182] | ExpSup=3176.9800
+Itemset [147] | ExpSup=3163.9900
+Itemset [592] | ExpSup=3138.8000
+
+============= TOP-K FREQUENT FROM UNCERTAIN DATABASES=============
+ Top K = 50
+ Items count from dataset: 893
+ Transactions count from dataset : 99922
+ Maximum memory usage : 178.1731948852539 mb
+ Total time ~ 1027309 ms
+===================================================

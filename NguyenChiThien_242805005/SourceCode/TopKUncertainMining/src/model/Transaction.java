@@ -3,11 +3,13 @@ package model;
 import java.util.Map;
 
 /**
- * Dai dien cho 1 giao dich trong co so du lieu khong chac chan
- * Moi item co mot xac suat xuat hien (0.0 - 1.0)
+ * Đại diện cho một giao dịch (transaction) trong cơ sở dữ liệu không chắc chắn (uncertain database).
+ * Mỗi item trong giao dịch được gán một xác suất xuất hiện (0.0 – 1.0).
  */
+ 
 public class Transaction {
-    private Map<String, Double> items; // itemID -> probability
+
+    private Map<String, Double> items;
 
     public Transaction(Map<String, Double> items) {
         this.items = items;

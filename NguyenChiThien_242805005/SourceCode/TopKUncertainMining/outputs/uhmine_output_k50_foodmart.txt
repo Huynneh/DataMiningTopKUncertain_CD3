@@ -1,0 +1,60 @@
+======PRINT TOP-K FREQUENT ITEMSETS FROM UNCERTAIN DATABASES=====
+
+Itemset [173] | ExpSup=13.8100
+Itemset [380] | ExpSup=12.7300
+Itemset [876] | ExpSup=12.7100
+Itemset [100] | ExpSup=12.2300
+Itemset [829] | ExpSup=12.1900
+Itemset [1163] | ExpSup=12.0700
+Itemset [421] | ExpSup=11.7500
+Itemset [1044] | ExpSup=11.7400
+Itemset [1064] | ExpSup=11.7300
+Itemset [525] | ExpSup=11.7200
+Itemset [1360] | ExpSup=11.6900
+Itemset [1415] | ExpSup=11.6900
+Itemset [375] | ExpSup=11.6200
+Itemset [1297] | ExpSup=11.3000
+Itemset [670] | ExpSup=11.2500
+Itemset [905] | ExpSup=11.0800
+Itemset [1179] | ExpSup=11.0800
+Itemset [752] | ExpSup=11.0500
+Itemset [1115] | ExpSup=11.0000
+Itemset [382] | ExpSup=11.0000
+Itemset [1188] | ExpSup=11.0000
+Itemset [170] | ExpSup=10.9900
+Itemset [726] | ExpSup=10.9400
+Itemset [78] | ExpSup=10.9400
+Itemset [497] | ExpSup=10.8200
+Itemset [654] | ExpSup=10.7500
+Itemset [1058] | ExpSup=10.7400
+Itemset [57] | ExpSup=10.6100
+Itemset [160] | ExpSup=10.5400
+Itemset [1432] | ExpSup=10.5200
+Itemset [1121] | ExpSup=10.5100
+Itemset [1169] | ExpSup=10.5000
+Itemset [1539] | ExpSup=10.4900
+Itemset [466] | ExpSup=10.4300
+Itemset [255] | ExpSup=10.3300
+Itemset [598] | ExpSup=10.2700
+Itemset [15] | ExpSup=10.2000
+Itemset [1491] | ExpSup=10.1600
+Itemset [563] | ExpSup=10.1400
+Itemset [1119] | ExpSup=10.1400
+Itemset [1302] | ExpSup=10.0700
+Itemset [520] | ExpSup=10.0600
+Itemset [348] | ExpSup=10.0600
+Itemset [1282] | ExpSup=10.0600
+Itemset [1256] | ExpSup=10.0500
+Itemset [1059] | ExpSup=10.0400
+Itemset [1371] | ExpSup=10.0300
+Itemset [660] | ExpSup=10.0200
+Itemset [663] | ExpSup=9.9800
+Itemset [1478] | ExpSup=9.9000
+
+============= TOP-K FREQUENT FROM UNCERTAIN DATABASES=============
+ Top K = 50
+ Items count from dataset: 1559
+ Transactions count from dataset : 4141
+ Maximum memory usage : 5.758232116699219 mb
+ Total time ~ 264 ms
+===================================================

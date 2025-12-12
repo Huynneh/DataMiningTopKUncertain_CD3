@@ -3,8 +3,14 @@ package model;
 import java.util.List;
 
 /**
- * Luu tru ket qua cua qua trinh khai thac Top-K tap mmuc thương xuyen
+ * Lưu trữ kết quả của quá trình khai thác Top-K tập mục thường xuyên
+ * trong cơ sở dữ liệu không chắc chắn.
+ * 
+ * Gồm:
+ *  - Danh sách Top-K itemsets thu được.
+ *  - Thời gian chạy thuật toán (ms).
  */
+
 public class Result {
     private List<Itemset> topKItemsets;
     private long runtimeMillis;

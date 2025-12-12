@@ -1,17 +1,24 @@
 package main;
 
-import dal.*;
-import model.*;
 import bll.*;
-
-import java.util.*;
+import dal.*;
 import java.io.*;
+import java.util.*;
+import model.*;
 
 public class Main {
 
-    // ============================================================
-    // 
-    // ============================================================
+    // =====================================================================
+    // Utility: đo thời gian chạy và bộ nhớ sử dụng cho một thuật toán
+    // =====================================================================
+    /**
+     * Chạy một thuật toán bất kỳ và đo:
+     *  - Thời gian thực thi (ms)
+     *  - Bộ nhớ tăng thêm (MB)
+     *
+     * @param algorithm Runnable chứa việc thực thi thuật toán
+     * @return Result đối tượng chứa timeMs và memMB
+     */
     public static Result runAlgorithm(Runnable algorithm) {
         Runtime rt = Runtime.getRuntime();
         rt.gc();
@@ -30,6 +37,9 @@ public class Main {
         return new Result(timeMs, memMB);
     }
 
+    /**
+     * Lưu kết quả đo thời gian và bộ nhớ.
+     */
     public static class Result {
 
         public double timeMs;
@@ -46,163 +56,147 @@ public class Main {
     // ============================================================
     public static void main(String[] args) {
 
-        // String originFile = "dataset/origin/example.txt";
-        // String probFile = "dataset/probability/example_probability.txt";
-        String originFile = "dataset/origin/chess.txt";
-        String probFile = "dataset/probability/chess_probability.txt";
-        // String originFile = "dataset/origin/foodmart.txt";
-        // String probFile = "dataset/probability/foodmart_probability.txt";
-        // String originFile = "dataset/origin/retail.txt";
-        // String probFile = "dataset/probability/retail_probability.txt";
-        // String originFile = "dataset/origin/t20i6d100k.txt";
-        // String probFile = "dataset/probability/t20i6d100k_probability.txt";
-        String baseName = new File(originFile).getName();
 
-        // ------------------------------------------------------------
-        // 1. 
-        // ------------------------------------------------------------
-        System.out.println(">>> Generating probability dataset...");
-        DatasetGenerator.generateProbabilityDataset(originFile, probFile);
-        System.out.println("Generated: " + probFile);
+        // -----------------------------------------------------------------
+        // CẤU HÌNH
+        // -----------------------------------------------------------------
+        String originFolder = "datasets/origin/";
+        String probFolder   = "datasets/probability/";
+        String outFolder    = "outputs/";
 
-        // ------------------------------------------------------------
-        // 2. 
-        // ------------------------------------------------------------
-        List<String> allItems = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(originFile))) {
+        int topK = 10;
+        double densityThreshold = 0.1;
 
-            Set<String> unique = new TreeSet<>();
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    unique.addAll(Arrays.asList(line.trim().split("\\s+")));
-                }
-            }
-            allItems.addAll(unique);
+        new File(probFolder).mkdirs();
+        new File(outFolder).mkdirs();
 
-        } catch (IOException e) {
-            System.err.println("Error: " + e.getMessage());
+        // -----------------------------------------------------------------
+        // Lấy danh sách file origin
+        // -----------------------------------------------------------------
+        File folder = new File(originFolder);
+        File[] files = folder.listFiles((dir, name) -> name.endsWith(".txt"));
+
+        if (files == null) {
+            System.out.println("ERROR: Origin folder does not exist: " + originFolder);
+            return;
+        }
+        if (files.length == 0) {
+            System.out.println("No .txt files found in: " + originFolder);
             return;
         }
 
-        // ------------------------------------------------------------
-        // 3. 
-        // ------------------------------------------------------------
-        List<Transaction> transactions
-                = DataReader.readUncertainDataset(probFile, allItems);
+        System.out.println("Detected " + files.length + " dataset(s).\n");
 
-        int itemCount = allItems.size();
-        int transCount = transactions.size();
+        // =====================================================================
+        // DUYỆT TẤT CẢ DATASET
+        // =====================================================================
+        for (File file : files) {
 
-        int k = 50;
+            String datasetName = file.getName().replace(".txt", "");
+            String originFile  = originFolder + file.getName();
+            String probFile    = probFolder + datasetName + "_probability.txt";
 
-        // ============================================================
-        // 4. TOP-K EXPECTED SUPPORT
-        // ============================================================
-        // System.out.println("\n--- Top-K Itemsets (Expected Support) ---");
-        // TopKExpectedSupport topk = new TopKExpectedSupport(transactions, k);
-        // List<Itemset> result1 = new ArrayList<>();
-        // Result r1 = runAlgorithm(() -> {
-        //     result1.addAll(topk.findTopK());
-        // });
-        // result1.forEach(System.out::println);
-        // DataWriter.writeResultToFile(
-        //         result1,
-        //         "testcase/output_" + "k" + k + "_" + baseName,
-        //         k,
-        //         itemCount,
-        //         transCount,
-        //         r1.memMB,
-        //         (long) r1.timeMs
-        // );
-        // ============================================================
-        // 5. U-APRIORI
-        // ============================================================
-        System.out.println("\n--- Top-K Frequent Itemsets (U-Apriori) ---");
+            System.out.println("==================================================");
+            System.out.println(">>> PROCESSING DATASET: " + datasetName);
+            System.out.println("==================================================");
 
-        UAprioriTopK apr = new UAprioriTopK(transactions, k);
+            // -------------------------------------------------------------
+            // 1. SINH DATASET XÁC SUẤT + LẤY DANH SÁCH ITEM CHUẨN
+            // -------------------------------------------------------------
+            System.out.println("\n>>> Generating probability dataset...");
+            List<String> allItems = DatasetGenerator.generateProbabilityDataset(originFile, probFile);
+            System.out.println("Generated: " + probFile);
+            System.out.println("Total items = " + allItems.size());
 
-        List<Itemset> result2 = new ArrayList<>();
-        Result r2 = runAlgorithm(() -> {
-            result2.addAll(apr.findTopK());
-        });
+            // -------------------------------------------------------------
+            // 2. ĐỌC DATASET XÁC SUẤT TRÙNG KHỚP VỚI allItems
+            // -------------------------------------------------------------
+            List<Transaction> transactions =
+                    DataReader.readUncertainDataset(probFile, allItems);
 
-        result2.forEach(System.out::println);
+            int itemCount = allItems.size();
+            int transCount = transactions.size();
+            System.out.println("Transactions: " + transCount);
 
-        DataWriter.writeResultToFile(
-                result2,
-                "testcase/uapriori_output_" + "k" + k + "_" + baseName,
-                k,
-                itemCount,
-                transCount,
-                r2.memMB,
-                (long) r2.timeMs
-        );
+            // =====================================================================
+            // 4. U-APRIORI
+            // =====================================================================
+            System.out.println("\n--- Running U-Apriori ---");
 
-        // ============================================================
-        // 6. U-FPGrowth
-        // ============================================================
-        System.out.println("\n--- Top-K Itemsets (U-FPGrowth) ---");
-        PriorityQueue<Itemset> pqFP
-                = new PriorityQueue<>(Comparator.comparingDouble(Itemset::getExpectedSupport));
-        UFPgrowth fp = new UFPgrowth(transactions, k, pqFP);
-        Result r3 = runAlgorithm(fp::mine);
-        List<Itemset> result3 = new ArrayList<>(pqFP);
-        result3.sort((a, b) -> Double.compare(b.getExpectedSupport(), a.getExpectedSupport()));
-        result3.forEach(System.out::println);
-        DataWriter.writeResultToFile(
-                result3,
-                "testcase/ufpgrowth_output_" + "k" + k + "_" + baseName,
-                k,
-                itemCount,
-                transCount,
-                r3.memMB,
-                (long) r3.timeMs
-        );
-        // ============================================================
-        // 7. U-HMine
-        // ============================================================
-        System.out.println("\n--- Top-K Itemsets (U-HMine) ---");
-        PriorityQueue<Itemset> pqHM
-                = new PriorityQueue<>(Comparator.comparingDouble(Itemset::getExpectedSupport));
-        UHMine hm = new UHMine(transactions, k, pqHM);
-        Result r4 = runAlgorithm(hm::mine);
-        List<Itemset> result4 = new ArrayList<>(pqHM);
-        result4.sort((a, b) -> Double.compare(b.getExpectedSupport(), a.getExpectedSupport()));
-        result4.forEach(System.out::println);
-        DataWriter.writeResultToFile(
-                result4,
-                "testcase/uhmine_output_" + "k" + k + "_" + baseName,
-                k,
-                itemCount,
-                transCount,
-                r4.memMB,
-                (long) r4.timeMs
-        );
-        // ============================================================
-        // 8. Hybrid FP-tree + H-Mine
-        // ============================================================
-        System.out.println("\n--- Top-K Itemsets (Hybrid) ---");
+            UAprioriTopK apriori = new UAprioriTopK(transactions, topK);
+            List<Itemset> resultApriori = new ArrayList<>();
 
-        HybridTopKMiner hybrid = new HybridTopKMiner(transactions, k, 0.5);
+            Result rA = runAlgorithm(() -> resultApriori.addAll(apriori.findTopK()));
 
-        List<Itemset> result5 = new ArrayList<>();
-        Result r5 = runAlgorithm(() -> {
-            result5.addAll(hybrid.mine());
-        });
+            DataWriter.writeResultToFile(
+                    resultApriori,
+                    outFolder + "uapriori_k" + topK + "_" + datasetName + ".txt",
+                    topK, itemCount, transCount,
+                    rA.memMB, (long) rA.timeMs
+            );
 
-        result5.forEach(System.out::println);
+            // =====================================================================
+            // 5. U-FPGrowth
+            // =====================================================================
+            System.out.println("\n--- Running U-FPGrowth ---");
 
-        DataWriter.writeResultToFile(
-                result5,
-                "testcase/hybrid_output_" + "k" + k + "_" + baseName,
-                k,
-                itemCount,
-                transCount,
-                r5.memMB,
-                (long) r5.timeMs
-        );
+            PriorityQueue<Itemset> pqFP =
+                    new PriorityQueue<>(Comparator.comparingDouble(Itemset::getExpectedSupport));
 
-        System.out.println("\n>>> DONE.");
+            UFPgrowth fp = new UFPgrowth(transactions, topK, pqFP);
+            Result rFP = runAlgorithm(fp::mine);
+
+            List<Itemset> resultFP = new ArrayList<>(pqFP);
+            resultFP.sort((a, b) -> Double.compare(b.getExpectedSupport(), a.getExpectedSupport()));
+
+            DataWriter.writeResultToFile(
+                    resultFP,
+                    outFolder + "ufpgrowth_k" + topK + "_" + datasetName + ".txt",
+                    topK, itemCount, transCount,
+                    rFP.memMB, (long) rFP.timeMs
+            );
+
+            // =====================================================================
+            // 6. U-HMine
+            // =====================================================================
+            System.out.println("\n--- Running U-HMine ---");
+
+            PriorityQueue<Itemset> pqHM =
+                    new PriorityQueue<>(Comparator.comparingDouble(Itemset::getExpectedSupport));
+
+            UHMine hm = new UHMine(transactions, topK, pqHM);
+            Result rHM = runAlgorithm(hm::mine);
+
+            List<Itemset> resultHM = new ArrayList<>(pqHM);
+            resultHM.sort((a, b) -> Double.compare(b.getExpectedSupport(), a.getExpectedSupport()));
+
+            DataWriter.writeResultToFile(
+                    resultHM,
+                    outFolder + "uhmine_k" + topK + "_" + datasetName + ".txt",
+                    topK, itemCount, transCount,
+                    rHM.memMB, (long) rHM.timeMs
+            );
+
+            // =====================================================================
+            // 7. HybridTopKMiner
+            // =====================================================================
+            System.out.println("\n--- Running HybridTopKMiner ---");
+
+            HybridTopKMiner hybrid = new HybridTopKMiner(transactions, topK, densityThreshold);
+            List<Itemset> resultHybrid = new ArrayList<>();
+
+            Result rHybrid = runAlgorithm(() -> resultHybrid.addAll(hybrid.mine()));
+
+            DataWriter.writeResultToFile(
+                    resultHybrid,
+                    outFolder + "hybrid_k" + topK + "_" + datasetName + ".txt",
+                    topK, itemCount, transCount,
+                    rHybrid.memMB, (long) rHybrid.timeMs
+            );
+
+            System.out.println("\n>>> FINISHED DATASET: " + datasetName + "\n");
+        }
+
+        System.out.println("\n>>> ALL DATASETS COMPLETED.");
     }
 }

@@ -1,25 +1,50 @@
 package bll;
 
 import java.util.*;
-import model.Transaction;
 import model.Itemset;
+import model.Transaction;
 
 /**
- * U-Apriori Top-K with dynamic threshold and pruning
+ * Lớp UAprioriTopK triển khai thuật toán U-Apriori để tìm Top-K
+ * tập mục phổ biến trong cơ sở dữ liệu không chắc chắn
+ *
+ * Thuật toán sử dụng:
+ *  - Expected Support (ES) cho từng tập mục
+ *  - Ngưỡng động Top-K (minES) để cắt tỉa ứng viên
+ *  - Phát sinh ứng viên theo kiểu Apriori (join + prune)
+ *  - Ước lượng cận trên UB = tổng ES của từng item đơn lẻ để cắt nhánh sớm
+ *
+ * Kết quả cuối cùng là Top-K itemset có ES cao nhất, sắp xếp giảm dần
  */
+
 public class UAprioriTopK {
 
+    /** Danh sách giao dịch không chắc chắn */
     private final List<Transaction> transactions;
+
+    /** Số lượng Top-K cần tìm */
     private final int k;
+
+    /** Danh sách item sắp theo ES đơn lẻ giảm dần */
     private final List<String> allItems;
+
+    /** Hàng đợi Top-K lưu itemset theo ES tăng dần */
     private final PriorityQueue<Itemset> topKQueue;
 
-    private double minES = 0.0; // Dynamic threshold
+    /** Ngưỡng ES động của Top-K (dùng để cắt tỉa) */
+    private double minES = 0.0; 
 
+    /**
+     * Khởi tạo thuật toán U-Apriori Top-K
+     *
+     * @param transactions cơ sở dữ liệu không chắc chắn
+     * @param k số tập mục cần tìm
+     */
     public UAprioriTopK(List<Transaction> transactions, int k) {
         this.transactions = transactions;
         this.k = k;
 
+        // Tính ES đơn lẻ cho từng item
         Map<String, Double> esMap = new HashMap<>();
         for (Transaction t : transactions) {
             for (Map.Entry<String, Double> e : t.getItems().entrySet()) {
@@ -27,6 +52,7 @@ public class UAprioriTopK {
             }
         }
 
+        // Sắp xếp item theo ES giảm dần – hỗ trợ cắt tỉa hiệu quả
         List<String> items = new ArrayList<>(esMap.keySet());
         items.sort((a, b) -> Double.compare(esMap.get(b), esMap.get(a)));
         this.allItems = items;
@@ -34,12 +60,17 @@ public class UAprioriTopK {
         this.topKQueue = new PriorityQueue<>(Comparator.comparingDouble(Itemset::getExpectedSupport));
     }
 
+    /**
+     * Thực thi U-Apriori Top-K với cắt tỉa theo ngưỡng động
+     *
+     * @return danh sách Top-K tập mục theo ES giảm dần
+     */
     public List<Itemset> findTopK() {
 
         List<Set<String>> currentLevel = new ArrayList<>();
         Map<Set<String>, Double> freqMap = new HashMap<>();
 
-        // --------------------- L1: Frequent 1-itemsets ---------------------
+        // ------------------- L1: tạo tập mục 1 phần tử -------------------
         for (String item : allItems) {
             Set<String> itemset = new LinkedHashSet<>();
             itemset.add(item);
@@ -53,7 +84,7 @@ public class UAprioriTopK {
             }
         }
 
-        // --------------------- Generate L2, L3, ... ------------------------
+        // ------------------- L2, L3, ...: Apriori join + prune ---------
         while (!currentLevel.isEmpty()) {
 
             List<Set<String>> nextLevel = new ArrayList<>();
@@ -126,6 +157,9 @@ public class UAprioriTopK {
         return sum;
     }
 
+    /**
+     * Thêm vào Top-K nếu đủ điều kiện, đồng thời cập nhật ngưỡng động minES
+     */
     private void pushTopK(Itemset is) {
         if (topKQueue.size() < k) {
             topKQueue.add(is);
@@ -139,6 +173,9 @@ public class UAprioriTopK {
         }
     }
 
+    /**
+     * Join-step Apriori: chỉ join được nếu hai tập mục có prefix giống nhau (trừ phần tử cuối)
+     */
     private Set<String> tryJoin(Set<String> a, Set<String> b) {
         List<String> A = new ArrayList<>(a);
         List<String> B = new ArrayList<>(b);
@@ -152,6 +189,9 @@ public class UAprioriTopK {
         return joined;
     }
 
+    /**
+     * Apriori prune: tất cả tập con (k-1) phải nằm trong freqMap
+     */
     private boolean allSubsetsFrequent(Set<String> candidate, Map<Set<String>, Double> freqMap) {
         for (String item : candidate) {
             Set<String> subset = new LinkedHashSet<>(candidate);

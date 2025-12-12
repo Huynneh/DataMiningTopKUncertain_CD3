@@ -1,9 +1,18 @@
 package bll;
 
+import java.util.*;
 import model.Itemset;
 import model.Transaction;
 
-import java.util.*;
+/**
+ * Thuật toán UHMine dùng để khai thác Top-K frequent itemsets 
+ * trong cơ sở dữ liệu giao dịch không chắc chắn (uncertain database),
+ * dựa trên giá trị Hỗ trợ Kỳ vọng (Expected Support - ES).
+ *
+ * Thuật toán duyệt sâu (DFS) để sinh các itemset ứng viên theo từng prefix,
+ * sử dụng ngưỡng cận (upper bound) và ngưỡng minES động để cắt tỉa không gian tìm kiếm.
+ * Kết quả được lưu trong priority queue dùng để quản lý Top-K itemset có ES cao nhất
+ */
 
 public class UHMine {
 
@@ -13,12 +22,26 @@ public class UHMine {
     private double minES = 0.0;
     private Set<String> visited = new HashSet<>();
 
+    /**
+     * Khởi tạo UHMine
+     *
+     * @param db         danh sách các giao dịch (uncertain transactions)
+     * @param topK       số lượng itemset cần lấy
+     * @param sharedQueue queue dùng để lưu trữ Top-K itemset
+     */
     public UHMine(List<Transaction> db, int topK, PriorityQueue<Itemset> sharedQueue) {
         this.db = db;
         this.topK = topK;
         this.topKQueue = sharedQueue;
     }
 
+    /**
+     * Tính ES chính xác cho một itemset bằng cách nhân xác suất xuất hiện
+     * của các item trong từng giao dịch
+     *
+     * @param items tập các item
+     * @return giá trị Expected Support
+     */
     private double exactES(Set<String> items) {
         double es = 0.0;
         for (Transaction t : db) {
@@ -36,6 +59,12 @@ public class UHMine {
         return es;
     }
 
+    /**
+     * Tính ES của từng item đơn trong một tập giao dịch con
+     *
+     * @param tdb tập giao dịch
+     * @return map item → ES
+     */
     private Map<String, Double> computeES(List<Transaction> tdb) {
         Map<String, Double> map = new HashMap<>();
         for (Transaction t : tdb) {
@@ -46,6 +75,13 @@ public class UHMine {
         return map;
     }
 
+    /**
+     * Sinh cơ sở dữ liệu điều kiện (conditional database) cho một item
+     *
+     * @param tdb  tập giao dịch hiện tại
+     * @param item item để điều kiện hóa
+     * @return danh sách giao dịch con sau khi loại bỏ item
+     */
     private List<Transaction> condDB(List<Transaction> tdb, String item) {
         List<Transaction> ret = new ArrayList<>();
         for (Transaction t : tdb) {
@@ -65,6 +101,13 @@ public class UHMine {
         return ret;
     }
 
+    /**
+     * ES của một item đơn
+     *
+     * @param item item cần tính
+     * @param tdb  tập giao dịch
+     * @return tổng ES
+     */
     private double singleES(String item, List<Transaction> tdb) {
         double sum = 0.0;
         for (Transaction t : tdb) {
@@ -76,6 +119,10 @@ public class UHMine {
         return sum;
     }
 
+    /**
+     * Điểm bắt đầu thuật toán: tính ES cho item đơn, sắp xếp,
+     * sau đó gọi đệ quy explore()
+     */
     public void mine() {
         Map<String, Double> es1 = computeES(db);
         List<String> items = new ArrayList<>(es1.keySet());
@@ -83,6 +130,14 @@ public class UHMine {
         explore(new TreeSet<>(), db, items);
     }
 
+    /**
+     * Hàm đệ quy chính của UHMine: sinh itemset theo prefix, 
+     * tính ES, cắt tỉa bằng minES, mở rộng cơ sở dữ liệu điều kiện
+     *
+     * @param prefix prefix itemset hiện tại
+     * @param tdb    tập giao dịch con ứng với prefix
+     * @param items  tập item có thể mở rộng
+     */
     private void explore(Set<String> prefix, List<Transaction> tdb, List<String> items) {
         for (int i = 0; i < items.size(); i++) {
             String item = items.get(i);
@@ -120,6 +175,12 @@ public class UHMine {
         }
     }
 
+    /**
+     * Đẩy một itemset vào Top-K queue
+     * Tự động cập nhật ngưỡng minES khi Top-K đủ phần tử.
+     *
+     * @param itemset itemset cần xét
+     */
     private void pushTopK(Itemset itemset) {
         String key = itemset.getItems().toString();
         if (visited.contains(key)) {
@@ -139,6 +200,11 @@ public class UHMine {
         }
     }
 
+    /**
+     * Trả về danh sách Top-K itemset đã khai thác.
+     *
+     * @return priority queue chứa itemset theo thứ tự ES tăng dần
+     */
     public PriorityQueue<Itemset> getTopK() {
         return topKQueue;
     }

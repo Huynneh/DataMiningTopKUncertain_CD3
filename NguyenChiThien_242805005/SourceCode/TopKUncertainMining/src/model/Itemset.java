@@ -2,6 +2,13 @@ package model;
 
 import java.util.Set;
 
+/**
+ * Lớp đại diện cho một itemset trong cơ sở dữ liệu không chắc chắn. 
+ * Mỗi itemset gồm: 
+ *  - Tập các item (items) 
+ *  - Hỗ trợ kỳ vọng (expectedSupport) 
+ *  - Xác suất tồn tại (existProbability)
+ */
 public class Itemset {
 
     private Set<String> items;
@@ -26,7 +33,6 @@ public class Itemset {
         this.existProbability = existProbability;
     }
 
-    // --- Getter & Setter ---
     public Set<String> getItems() {
         return items;
     }

@@ -62,10 +62,12 @@ public class Main {
         // -----------------------------------------------------------------
         String originFolder = "datasets/origin/";
         String probFolder   = "datasets/probability/";
-        String outFolder    = "outputs/";
+        String outFolder    = "test/";
 
         int topK = 10;
         double densityThreshold = 0.1;
+
+        List<List<String>> table = new ArrayList<>();
 
         new File(probFolder).mkdirs();
         new File(outFolder).mkdirs();
@@ -135,6 +137,8 @@ public class Main {
                     rA.memMB, (long) rA.timeMs
             );
 
+            table.add(Arrays.asList(datasetName, "U-Apriori", String.valueOf(topK), String.valueOf(rA.timeMs), String.valueOf(rA.memMB)));
+
             // =====================================================================
             // 5. U-FPGrowth
             // =====================================================================
@@ -155,6 +159,8 @@ public class Main {
                     topK, itemCount, transCount,
                     rFP.memMB, (long) rFP.timeMs
             );
+
+            table.add(Arrays.asList(datasetName, "U-FPGrowth", String.valueOf(topK), String.valueOf(rFP.timeMs), String.valueOf(rFP.memMB)));
 
             // =====================================================================
             // 6. U-HMine
@@ -177,6 +183,8 @@ public class Main {
                     rHM.memMB, (long) rHM.timeMs
             );
 
+            table.add(Arrays.asList(datasetName, "U-HMine", String.valueOf(topK), String.valueOf(rHM.timeMs), String.valueOf(rHM.memMB)));
+
             // =====================================================================
             // 7. HybridTopKMiner
             // =====================================================================
@@ -194,9 +202,13 @@ public class Main {
                     rHybrid.memMB, (long) rHybrid.timeMs
             );
 
+            table.add(Arrays.asList(datasetName, "Hybrid", String.valueOf(topK), String.valueOf(rHybrid.timeMs), String.valueOf(rHybrid.memMB)));
+
             System.out.println("\n>>> FINISHED DATASET: " + datasetName + "\n");
         }
 
+        List<String> headers = Arrays.asList("Dataset", "Algorithm", "K", "Runtime_ms", "Memory_MB");
+        CSVExporter.exportToCSV(headers, table, outFolder + "result_table.csv");
         System.out.println("\n>>> ALL DATASETS COMPLETED.");
     }
 }

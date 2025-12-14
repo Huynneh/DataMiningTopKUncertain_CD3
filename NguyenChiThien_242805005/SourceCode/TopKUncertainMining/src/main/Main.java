@@ -64,7 +64,11 @@ public class Main {
         String probFolder   = "datasets/probability/";
         String outFolder    = "test/";
 
-        int topK = 10;
+        // int topK = 10;
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter K (Top-K): ");
+        int topK = sc.nextInt();
+        
         double densityThreshold = 0.1;
 
         List<List<String>> table = new ArrayList<>();

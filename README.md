@@ -14,35 +14,6 @@ Dự án này cài đặt nhiều thuật toán khai thác Top-K Frequent Itemse
 - HybridTopKMiner (kết hợp dựa trên mật độ dữ liệu)
 Hệ thống tự động duyệt toàn bộ dataset, sinh bản dataset xác suất, chạy tất cả thuật toán và ghi kết quả ra file .txt.
 
-## Cấu trúc dự án
-TOPKUNCERTAINMINING
-|
-|--datasets/
-|   |--origin/
-|   |--probability/
-|
-|--outputs/
-|
-|--src/
-    |--bll/
-    |   |--HybridTopKMiner.java
-    |   |--UAprioriTopK.java
-    |   |--UFPGrowth.java
-    |   |--UHMine.java
-    |
-    |--dal/
-    |   |--DataReader.java
-    |   |--DatasetGenerator.java
-    |   |---DataWriter.java
-    |
-    |--main/
-    |   |--Main.java
-    |
-    |--model/
-        |--Itemset.java
-        |--Result.java
-        |--Transaction.java
-
 ## Cài đặt 
 Cài đặt Java Development Kit (JDK) cho Windows nếu chưa có [Tại đây](https://www.oracle.com/java/technologies/javase/jdk15-archive-downloads.html)
 

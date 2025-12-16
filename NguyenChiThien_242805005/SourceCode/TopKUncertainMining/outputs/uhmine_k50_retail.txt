@@ -1,0 +1,60 @@
+======PRINT TOP-K FREQUENT ITEMSETS FROM UNCERTAIN DATABASES=====
+
+Itemset [40] | ExpSup=25842.8300
+Itemset [49] | ExpSup=21488.3500
+Itemset [39] | ExpSup=7981.0900
+Itemset [33] | ExpSup=7757.3300
+Itemset [40, 49] | ExpSup=7621.5724
+Itemset [42] | ExpSup=7600.7000
+Itemset [40, 42] | ExpSup=2949.3091
+Itemset [39, 40] | ExpSup=2695.0728
+Itemset [42, 49] | ExpSup=2328.6885
+Itemset [66] | ExpSup=2267.9100
+Itemset [33, 40] | ExpSup=2197.9159
+Itemset [33, 49] | ExpSup=2090.9774
+Itemset [39, 49] | ExpSup=2067.4664
+Itemset [90] | ExpSup=1946.7200
+Itemset [226] | ExpSup=1644.4000
+Itemset [171] | ExpSup=1546.2200
+Itemset [238] | ExpSup=1535.0700
+Itemset [37] | ExpSup=1483.0200
+Itemset [111] | ExpSup=1407.5800
+Itemset [311] | ExpSup=1318.8900
+Itemset [102] | ExpSup=1136.0100
+Itemset [476] | ExpSup=1115.5300
+Itemset [272] | ExpSup=1076.5600
+Itemset [39, 42] | ExpSup=998.0295
+Itemset [40, 42, 49] | ExpSup=970.7842
+Itemset [439] | ExpSup=958.2800
+Itemset [414] | ExpSup=941.4300
+Itemset [271] | ExpSup=906.3700
+Itemset [1328] | ExpSup=900.3200
+Itemset [148] | ExpSup=899.5800
+Itemset [2239] | ExpSup=878.9100
+Itemset [33, 42] | ExpSup=828.8164
+Itemset [39, 40, 49] | ExpSup=822.4962
+Itemset [80] | ExpSup=813.2400
+Itemset [171, 39] | ExpSup=768.9211
+Itemset [61] | ExpSup=761.3700
+Itemset [534] | ExpSup=759.6900
+Itemset [12926] | ExpSup=757.6000
+Itemset [256] | ExpSup=749.3000
+Itemset [33, 39] | ExpSup=744.9099
+Itemset [1147] | ExpSup=735.5900
+Itemset [37, 39] | ExpSup=734.6876
+Itemset [49, 90] | ExpSup=728.9537
+Itemset [40, 66] | ExpSup=724.9273
+Itemset [40, 90] | ExpSup=713.6372
+Itemset [10] | ExpSup=707.9600
+Itemset [33, 40, 49] | ExpSup=707.8356
+Itemset [111, 39] | ExpSup=696.1500
+Itemset [186] | ExpSup=693.8200
+Itemset [16011] | ExpSup=679.8400
+
+============= TOP-K FREQUENT FROM UNCERTAIN DATABASES=============
+ Top K = 50
+ Items count from dataset: 16470
+ Transactions count from dataset : 88162
+ Maximum memory usage : 110.46356201171875 mb
+ Total time ~ 571110 ms
+===================================================

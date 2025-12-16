@@ -1,0 +1,40 @@
+======PRINT TOP-K FREQUENT ITEMSETS FROM UNCERTAIN DATABASES=====
+
+Itemset [40] | ExpSup=25874.5500
+Itemset [49] | ExpSup=21549.7600
+Itemset [39] | ExpSup=7917.4600
+Itemset [33] | ExpSup=7757.0000
+Itemset [42] | ExpSup=7624.3900
+Itemset [40, 49] | ExpSup=7617.1809
+Itemset [40, 42] | ExpSup=2976.1129
+Itemset [39, 40] | ExpSup=2696.6651
+Itemset [42, 49] | ExpSup=2378.6149
+Itemset [66] | ExpSup=2269.7300
+Itemset [33, 40] | ExpSup=2196.7218
+Itemset [33, 49] | ExpSup=2074.1383
+Itemset [39, 49] | ExpSup=2068.2967
+Itemset [90] | ExpSup=1976.3000
+Itemset [226] | ExpSup=1677.7600
+Itemset [171] | ExpSup=1578.0100
+Itemset [238] | ExpSup=1526.9800
+Itemset [37] | ExpSup=1505.5100
+Itemset [111] | ExpSup=1416.4900
+Itemset [311] | ExpSup=1313.9400
+Itemset [102] | ExpSup=1135.8500
+Itemset [476] | ExpSup=1083.3300
+Itemset [272] | ExpSup=1064.2300
+Itemset [39, 42] | ExpSup=1001.5345
+Itemset [40, 42, 49] | ExpSup=995.4946
+Itemset [414] | ExpSup=954.0500
+Itemset [439] | ExpSup=936.5600
+Itemset [1328] | ExpSup=909.4900
+Itemset [148] | ExpSup=889.6100
+Itemset [271] | ExpSup=875.1100
+
+============= TOP-K FREQUENT FROM UNCERTAIN DATABASES=============
+ Top K = 30
+ Items count from dataset: 16470
+ Transactions count from dataset : 88162
+ Maximum memory usage : 78.03219604492188 mb
+ Total time ~ 321458 ms
+===================================================

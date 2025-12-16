@@ -62,7 +62,7 @@ public class Main {
         // -----------------------------------------------------------------
         String originFolder = "datasets/origin/";
         String probFolder   = "datasets/probability/";
-        String outFolder    = "test/";
+        String outFolder    = "outputs/";
 
         // int topK = 10;
         Scanner sc = new Scanner(System.in);
@@ -212,7 +212,7 @@ public class Main {
         }
 
         List<String> headers = Arrays.asList("Dataset", "Algorithm", "K", "Runtime_ms", "Memory_MB");
-        CSVExporter.exportToCSV(headers, table, outFolder + "result_table.csv");
+        CSVExporter.exportToCSV(headers, table, outFolder + "result_table_k" + topK + ".csv");
         System.out.println("\n>>> ALL DATASETS COMPLETED.");
     }
 }

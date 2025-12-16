@@ -1,0 +1,40 @@
+======PRINT TOP-K FREQUENT ITEMSETS FROM UNCERTAIN DATABASES=====
+
+Itemset [14] | ExpSup=2.3400
+Itemset [2] | ExpSup=2.2200
+Itemset [6] | ExpSup=2.2000
+Itemset [15] | ExpSup=1.8100
+Itemset [1] | ExpSup=1.4100
+Itemset [3] | ExpSup=1.3100
+Itemset [4] | ExpSup=1.3100
+Itemset [31] | ExpSup=1.3000
+Itemset [40] | ExpSup=1.0000
+Itemset [36] | ExpSup=0.9600
+Itemset [7] | ExpSup=0.9600
+Itemset [33] | ExpSup=0.8800
+Itemset [9] | ExpSup=0.8600
+Itemset [1, 6] | ExpSup=0.8019
+Itemset [14, 4] | ExpSup=0.7857
+Itemset [14, 15] | ExpSup=0.7808
+Itemset [6, 7] | ExpSup=0.7296
+Itemset [2, 3] | ExpSup=0.7140
+Itemset [11] | ExpSup=0.6400
+Itemset [11, 6] | ExpSup=0.6336
+Itemset [8] | ExpSup=0.6100
+Itemset [39] | ExpSup=0.5400
+Itemset [1, 11] | ExpSup=0.5184
+Itemset [1, 11, 6] | ExpSup=0.5132
+Itemset [5] | ExpSup=0.5100
+Itemset [41] | ExpSup=0.5100
+Itemset [32] | ExpSup=0.5000
+Itemset [13] | ExpSup=0.4600
+Itemset [15, 4] | ExpSup=0.4536
+Itemset [35] | ExpSup=0.4500
+
+============= TOP-K FREQUENT FROM UNCERTAIN DATABASES=============
+ Top K = 30
+ Items count from dataset: 27
+ Transactions count from dataset : 20
+ Maximum memory usage : 0.1019744873046875 mb
+ Total time ~ 0 ms
+===================================================
